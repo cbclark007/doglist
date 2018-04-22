@@ -1,3 +1,7 @@
+//heroku link: adoglist.herokuapp.com
+
+//https://www.guidedogs.org/wp-content/uploads/2015/05/Dog-Im-Not.jpg
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -28,6 +32,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, '../public')));
+app.use(methodOverride('_method'));
 
 app.get('/', (req, res) => {
   res.redirect('/dogs');
@@ -36,7 +41,7 @@ app.get('/', (req, res) => {
 app.get('/dogs', (req, res) => {
   Dog.find()
     .then(dogs => {
-      res.send(dogs);
+      res.render('dogs/home', {dogs});
     }).catch(e => {
       res.status(404).send();
     })
@@ -47,23 +52,105 @@ app.get('/dogs/new', (req, res) => {
 })
 
 app.post('/dogs', (req, res) => {
-  if(!req.body.name || !req.body.age) {
+  if(!req.body.name || !req.body.age || !req.body.description || !req.body.personality || !req.body.image) {
     res.status(404).send();
   }
   const dog = new Dog({
     name:req.body.name,
-    age: req.body.age
+    age: req.body.age,
+    description: req.body.description,
+    personality: req.body.personality,
+    image: req.body.image
   })
   dog.save()
     .then(dog => {
-      res.send(dog);
+      res.redirect('/');
     }).catch(e => {
       res.status(400).send();
     })
 })
 
+app.get('/:id', (req, res) => {
+  const route = `/dogs/${req.params.id}`;
+  res.redirect(route)
+})
+
+app.get('/dogs/:id', (req, res) => {
+  Dog.find({"_id": req.params.id})
+    .then(dogs => {
+      res.render('dogs/show', {dog: dogs[0]})
+    }).catch(e => {
+      res.status(404).send();
+    })
+})
+
 app.delete('/dogs/:id', (req, res) => {
   console.log("hit delete route");
+  Dog.deleteOne({"_id": req.params.id})
+    .then(dog => {
+      res.redirect('../dogs');
+    }).catch(e => {
+      res.status(404).send();
+    })
+})
+
+app.get('/dogs/update/:id', (req, res) => {
+  Dog.find({"_id": req.params.id})
+    .then(dogs => {
+      const personality = dogs[0].personality;
+      var happy = "";
+      var quiet = "";
+      var energetic = "";
+      var lazy = "";
+      if(personality === "happy") {
+        happy = "selected";
+      } else if(personality === "quiet") {
+        quiet = "selected";
+      } else if(personality === "energetic") {
+        energetic = "selected";
+      } else {
+        lazy = "selected";
+      }
+
+      res.render('dogs/update',
+      {
+        dog: dogs[0],
+        happy,
+        quiet,
+        energetic,
+        lazy
+      })
+    }).catch(e => {
+      res.status(404).send();
+    })
+})
+
+app.post('/dogs/update/:id', (req, res) => {
+  if(!req.body.name || !req.body.age || !req.body.description || !req.body.personality || !req.body.image) {
+    res.status(404).send();
+  }
+
+  Dog.updateOne(
+    {
+      "_id": req.params.id
+    },
+    {
+      $set: {
+              name: req.body.name,
+              age: req.body.age,
+              description: req.body.description,
+              personality: req.body.personality,
+              image: req.body.image
+            }
+    },
+    {
+      returnOriginal:false
+    }
+  ).then(dog => {
+    res.redirect('/');
+  }).catch(e => {
+    res.status(400).send();
+  })
 })
 
 app.listen(port, () => {

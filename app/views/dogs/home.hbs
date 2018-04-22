@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/css/master.css">
+    <title>Home: Doglist</title>
+  </head>
+  <body>
+    <section id="everything">
+      <h1>Doglist</h1>
+      <section id="button-section">
+        <a href="dogs/new" class="btn">Create</a>
+      </section>
+
+      <br>
+
+      <section id="doglist">
+        {{#each dogs as |dog|}}
+          <a href={{dog._id}} class="linkbox">
+            <div class="dogbox">
+              <img src={{dog.image}} class="dogimage">
+              <div class="text">
+                <p><b>Name:</b> {{dog.name}}</p>
+                <p><b>Age:</b> {{dog.age}}</p>
+                <p><b>Personality:</b> {{dog.personality}}</p>
+                <p><b>Description:</b> {{dog.description}}</p>
+              </div>
+            </a>
+          </div>
+          <!-- <div class="dogbox"></div>
+          <div class="dogbox"></div>
+          <div class="dogbox"></div>
+          <div class="dogbox"></div>
+          <div class="dogbox"></div>
+          <div class="dogbox"></div> -->
+        {{/each}}
+      </section>
+    </section>
+  </body>
+</html>

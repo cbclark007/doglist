@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/css/master.css">
+    <title>{{dog.name}}</title>
+  </head>
+  <body>
+    <section id="button-section">
+      <a href="../dogs" class="btn">Home</a>
+    </section>
+    <h1>{{dog.name}}</h1>
+    <img src={{dog.image}} class="bigimage"></img>
+    <h3>Age: {{dog.age}}</h3>
+    <h3>Personality: {{dog.personality}}</h3>
+    <h4>Description: {{dog.description}}</h4>
+
+    <section id="bottom-buttons">
+      <form action="/dogs/update/{{dog._id}}" class="a-bottom-button">
+        <button type="submit" class="btn">Update</button>
+      </form>
+
+      <form method="post" action="/dogs/{{dog._id}}?_method=DELETE" class="a-bottom-button">
+        <button type="submit" class="btn">Delete</button>
+      </form>
+    </section>
+  </body>
+</html>

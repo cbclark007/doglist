@@ -3,18 +3,38 @@
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="/css/master.css">
-    <title></title>
+    <title>Create a New Dog</title>
   </head>
   <body>
+    <section id="button-section">
+      <a href="../dogs" class="btn">Home</a>
+    </section>
     <h1>Create a New Dog</h1>
-    <form action="/dogs" method="post">
-      <label for="dogName">Name</label>
-      <input id = "dogName" type="text" name="name">
-      <br>
-      <label for="dogAge">Age</label>
-      <input id = "dogAge" type="text" name="age">
-      <br>
-      <input type="submit" value="Create New Dog">
-    </form>
+    <section id="formcontainer">
+      <form action="/dogs" method="post" class="inputform">
+        <label for="dogName">Name:</label>
+        <input id = "dogName" type="text" name="name" required>
+        <br>
+        <label for="dogAge">Age:</label>
+        <input id = "dogAge" type="number" name="age" required>
+        <br>
+        <label for="dogPersonality">Personality Type:</label>
+        <select name="personality" required>
+          <option value="happy">Happy</option>
+          <option value="quiet">Quiet</option>
+          <option value="energetic">Energetic</option>
+          <option value="lazy">Lazy</option>
+        </select>
+        <br>
+        <label for="dogDescription">Description:</label>
+        <textarea name="description" rows="10" cols="30" required></textarea>
+        <br>
+        <label for="dogImage">image URL:</label>
+        <input id = "dogImage" type="text" name="image" required>
+        <br>
+
+        <input type="submit" value="Create New Dog" class="btn">
+      </form>
+    </section>
   </body>
 </html>
