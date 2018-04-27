@@ -31,14 +31,14 @@
 
         <br>
         <label for="dogImage">Upload New Image:</label>
-        <input type="file" name="dogImage" value="" required>
+        <input type="file" name="dogImage" value="">
         <br>
 
         <label>Current Image:</label>
         <img src="{{dog.image}}" alt="" class="imgDisplayUpdate">
         <br>
 
-        <!-- <input class="hidden" name="id" value={{dog._id}}> -->
+        <input class="hidden" name="originalimg" value={{dog.image}}>
 
         <input type="submit" required class="btn" value="Save">
       </form>

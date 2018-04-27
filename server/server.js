@@ -128,8 +128,13 @@ app.get('/dogs/update/:id', (req, res) => {
 })
 
 app.post('/dogs/update/:id', upload.single('dogImage'), (req, res) => {
+  var filepath;
 
-  const filepath = "/images/" + req.file.filename;
+  if(!req.file) {
+    filepath = req.body.originalimg;
+  } else {
+    filepath = "/images/" + req.file.filename;
+  }
 
   Dog.updateOne(
     {
