@@ -11,7 +11,7 @@
     </section>
     <h1>Create a New Dog</h1>
     <section id="formcontainer">
-      <form action="/dogs" method="post" class="inputform">
+      <form action="/dogs" method="post" class="inputform" enctype="multipart/form-data">
         <label for="dogName">Name:</label>
         <input id = "dogName" type="text" name="name" required>
         <br>
@@ -29,8 +29,8 @@
         <label for="dogDescription">Description:</label>
         <textarea name="description" rows="10" cols="30" required></textarea>
         <br>
-        <label for="dogImage">image URL:</label>
-        <input id = "dogImage" type="text" name="image" required>
+        <label for="dogImage">Image File:</label>
+        <input type="file" name="dogImage" value="" required>
         <br>
 
         <input type="submit" value="Create New Dog" class="btn">

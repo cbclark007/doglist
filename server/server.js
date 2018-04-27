@@ -10,6 +10,9 @@ const _ = require("lodash");
 const path = require('path');
 const hbs = require('hbs');
 const methodOverride = require('method-override');
+const multer = require('multer');
+
+const upload = multer({dest: './public/images'});
 
 const app = express();
 
@@ -51,16 +54,15 @@ app.get('/dogs/new', (req, res) => {
   res.render('dogs/new');
 })
 
-app.post('/dogs', (req, res) => {
-  if(!req.body.name || !req.body.age || !req.body.description || !req.body.personality || !req.body.image) {
-    res.status(404).send();
-  }
+app.post('/dogs', upload.single('dogImage'), (req, res) => {
+  const filepath = "/images/" + req.file.filename;
+
   const dog = new Dog({
     name:req.body.name,
     age: req.body.age,
     description: req.body.description,
     personality: req.body.personality,
-    image: req.body.image
+    image: filepath
   })
   dog.save()
     .then(dog => {
@@ -125,10 +127,9 @@ app.get('/dogs/update/:id', (req, res) => {
     })
 })
 
-app.post('/dogs/update/:id', (req, res) => {
-  if(!req.body.name || !req.body.age || !req.body.description || !req.body.personality || !req.body.image) {
-    res.status(404).send();
-  }
+app.post('/dogs/update/:id', upload.single('dogImage'), (req, res) => {
+
+  const filepath = "/images/" + req.file.filename;
 
   Dog.updateOne(
     {
@@ -140,7 +141,7 @@ app.post('/dogs/update/:id', (req, res) => {
               age: req.body.age,
               description: req.body.description,
               personality: req.body.personality,
-              image: req.body.image
+              image: filepath
             }
     },
     {

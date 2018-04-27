@@ -85,6 +85,10 @@ h1 {
   display:none;
 }
 
+.imgDisplayUpdate {
+  width:100%;
+}
+
 .btn:hover {
   background: #28a318;
   /* background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);

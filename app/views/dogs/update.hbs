@@ -11,7 +11,7 @@
     </section>
     <h1>Update Information!</h1>
     <section id="formcontainer">
-      <form action="/dogs/update/{{dog._id}}" method="post" class="inputform">
+      <form action="/dogs/update/{{dog._id}}" method="post" class="inputform" enctype="multipart/form-data">
         <label for="dogName">Name:</label>
         <input id = "dogName" type="text" name="name" required value={{dog.name}}>
         <br>
@@ -27,10 +27,15 @@
         </select>
         <br>
         <label for="dogDescription">Description</label>
-        <br>
         <textarea name="description" rows="10" cols="30" required>{{dog.description}}</textarea>
-        <label for="dogImage">image URL</label>
-        <input id = "dogImage" type="text" name="image" required value={{dog.image}}>
+
+        <br>
+        <label for="dogImage">Upload New Image:</label>
+        <input type="file" name="dogImage" value="" required>
+        <br>
+
+        <label>Current Image:</label>
+        <img src="{{dog.image}}" alt="" class="imgDisplayUpdate">
         <br>
 
         <!-- <input class="hidden" name="id" value={{dog._id}}> -->
